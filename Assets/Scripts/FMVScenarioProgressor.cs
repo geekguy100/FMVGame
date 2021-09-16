@@ -10,11 +10,7 @@ using UnityEngine.UI;
 
 public class FMVScenarioProgressor : MonoBehaviour
 {
-    [Tooltip("The scenario to lead into.")]
-    [SerializeField] private FMVScenarioSO nextScenario;
-
-    [Tooltip("The channel to raise an event to to signal a change in scenarios.")]
-    [SerializeField] private FMVScenarioChannelSO scenarioCallChannel;
+    [SerializeField] private FMVScenarioProgressorData data;
 
     private Button btn;
 
@@ -40,6 +36,6 @@ public class FMVScenarioProgressor : MonoBehaviour
     /// </summary>
     public void ProgressScenario()
     {
-        scenarioCallChannel.RaiseEvent(nextScenario);
+        data.RequestScenarioProgression();
     }
 }

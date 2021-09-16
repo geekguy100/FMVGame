@@ -69,12 +69,16 @@ public class FMVManager : MonoBehaviour
     /// <param name="scenario">The scenario to swap to.</param>
     public void SwapScenario(FMVScenarioSO scenario)
     {
+        print("Swapping scenarios");
         StopCurrentScenario();
 
+        videoParent.loopPointReached -= currentScenario.OnVideoOver;
         currentScenario.UnInit();
+
         ClearPopups();
         currentScenario = scenario;
         currentScenario.Init();
+        videoParent.loopPointReached += currentScenario.OnVideoOver;
 
         videoParent.clip = currentScenario.VideoClip;
 
@@ -87,10 +91,10 @@ public class FMVManager : MonoBehaviour
     private void ClearPopups()
     {
         int childCount = videoParent.transform.childCount;
-        while (childCount > 0)
+        print("Clearing popups. Child count is " + childCount);
+        for (int i = 0; i < childCount; ++i)
         {
-            Destroy(videoParent.transform.GetChild(0).gameObject);
-            childCount--;
+            Destroy(videoParent.transform.GetChild(i).gameObject);
         }
     }
 

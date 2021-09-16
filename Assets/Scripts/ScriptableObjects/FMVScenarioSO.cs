@@ -14,10 +14,9 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Video;
-using System.Collections.Generic;
 
 [CreateAssetMenu(menuName = "FMV Maker/Scenario", fileName = "New Scenario")]
-public class FMVScenarioSO : SerializedScriptableObject
+public class FMVScenarioSO : ScriptableObject
 {
     [Tooltip("The video clip to play during this scenario.")]
     [SerializeField] private VideoClip videoClip;
@@ -33,7 +32,16 @@ public class FMVScenarioSO : SerializedScriptableObject
     }
 
     [Tooltip("The channel to receive video time elapsed calls from.")]
+    [HideIf("TimeElapsedChannelSet")]
     [SerializeField] private DoubleChannelSO timeElapsedChannel;
+    /// <summary>
+    /// Returns true if the timeElapsedChannel is not null.
+    /// </summary>
+    /// <returns>True if the timeElapsedChannel is not null.</returns>
+    private bool TimeElapsedChannelSet()
+    {
+        return timeElapsedChannel != null;
+    }
 
     [Tooltip("True if the player will be required to make a choice.\n" +
              "False if scenario will automatically play into the next.")]
@@ -66,9 +74,11 @@ public class FMVScenarioSO : SerializedScriptableObject
     private int popupsLength;
 
     // No choices to be made
-    [Tooltip("The scenario to progress to once the current scenario ends.")]
+    [Tooltip("The progressor data ScriptableObject to use to progress into the " +
+        "next channel if no choices are to be made.")]
     [HideIf("choicesToBeMade")]
-    [SerializeField] private FMVScenarioSO nextScenario;
+    [Required("Video will abruptly end if there is no progressor data.", InfoMessageType.Info)]
+    [SerializeField] private FMVScenarioProgressorData scenarioProgressorData;
 
 
 
@@ -98,12 +108,10 @@ public class FMVScenarioSO : SerializedScriptableObject
     /// <param name="elapsedTime">The elapsed time in the video.</param>
     private void TrackTime(double elapsedTime)
     {
-        Debug.Log("Tracking time!");
         // If there are no popups in the array, 
         // unsubscribe from the event to prevent function calls.
         if (popupsLength <= 0)
         {
-            Debug.Log("No more popups... Unsubbing");
             timeElapsedChannel.OnEventRaised -= TrackTime;
             return;
         }
@@ -124,6 +132,20 @@ public class FMVScenarioSO : SerializedScriptableObject
                 popupsClone[i] = null;
                 popupsLength--;
             }
+        }
+    }
+
+    /// <summary>
+    /// Invoked when the video is over.
+    /// </summary>
+    /// <param name="source">The VideoPlayer that ended.</param>
+    public void OnVideoOver(VideoPlayer source)
+    {
+        // If there are no choices to be made and we want to progress immediately into
+        // the next scenario, invoke the RequestScenarioProgression() method.
+        if (!choicesToBeMade)
+        {
+            scenarioProgressorData.RequestScenarioProgression();
         }
     }
 

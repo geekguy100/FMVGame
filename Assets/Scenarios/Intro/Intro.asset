@@ -12,18 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d358a003be2f3ea4f85932774ba11c00, type: 3}
   m_Name: Intro
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
   videoClip: {fileID: 32900000, guid: 3765797d6bf0ab748bf96b5281003d60, type: 3}
   timeElapsedChannel: {fileID: 11400000, guid: 339aa48be2143104588dad10ef90050b, type: 2}
   choicesToBeMade: 1
   popups:
   - {fileID: -6938711257934445771, guid: 73b91a5ae883c3b4fbce1e87b1b837e4, type: 3}
-  nextScenario: {fileID: 0}
+  - {fileID: -6938711257934445771, guid: 81d7e80feee95ca4a89e2da99696b01e, type: 3}
+  scenarioProgressorData: {fileID: 0}
