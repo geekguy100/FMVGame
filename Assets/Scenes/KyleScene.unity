@@ -239,6 +239,7 @@ MonoBehaviour:
   currentScenario: {fileID: 11400000, guid: fe9af0f04bf313f458c47fb13f029fa4, type: 2}
   videoParent: {fileID: 1535313961}
   elapsedTimeChannel: {fileID: 11400000, guid: 339aa48be2143104588dad10ef90050b, type: 2}
+  scenarioProgressorChannel: {fileID: 11400000, guid: 106f3903f8355f84fa346259715224ff, type: 2}
 --- !u!1 &1535313959
 GameObject:
   m_ObjectHideFlags: 0

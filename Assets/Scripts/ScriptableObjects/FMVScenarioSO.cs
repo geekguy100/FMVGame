@@ -70,20 +70,24 @@ public class FMVScenarioSO : SerializedScriptableObject
     [HideIf("choicesToBeMade")]
     [SerializeField] private FMVScenarioSO nextScenario;
 
-    
 
+
+    /// <summary>
+    /// Initializes the current scenario.
+    /// </summary>
     public void Init()
     {
-        Debug.Log("ScenarioSO Init() ");
         popupsLength = popups.Length;
         popupsClone = popups.Clone() as FMVTimedObjectPopup[];
 
         timeElapsedChannel.OnEventRaised += TrackTime;
     }
 
+    /// <summary>
+    /// Unsubscribes from the time elapsed channel's event.
+    /// </summary>
     public void UnInit()
     {
-        Debug.Log("ScenarioSO UnInit()");
         timeElapsedChannel.OnEventRaised -= TrackTime;
     }
 

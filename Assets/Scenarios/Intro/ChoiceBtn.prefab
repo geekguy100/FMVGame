@@ -148,8 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 773f96ac02ed0ba4eaa0b928a48f351c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextScenario: {fileID: 0}
-  NextScenario: {fileID: 0}
+  nextScenario: {fileID: 11400000, guid: 82886d252e9df71489736b021d49724e, type: 2}
+  scenarioCallChannel: {fileID: 11400000, guid: 106f3903f8355f84fa346259715224ff, type: 2}
 --- !u!1 &2985735401336463623
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,12 +22,24 @@ public class FMVManager : MonoBehaviour
 
     [Tooltip("Channel to broadcast the time elapsed to.")]
     [SerializeField] private DoubleChannelSO elapsedTimeChannel;
-   
+
+    [Tooltip("Channel to receive calls to progress the scenario from.")]
+    [SerializeField] private FMVScenarioChannelSO scenarioProgressorChannel;
+
+
+    private void OnEnable()
+    {
+        scenarioProgressorChannel.OnEventRaised += SwapScenario;
+    }
+
+    private void OnDisable()
+    {
+        scenarioProgressorChannel.OnEventRaised -= SwapScenario;
+    }
 
     private void Start()
     {
         SwapScenario(currentScenario);
-        PlayCurrentScenario();
     }
 
     /// <summary>
@@ -60,10 +72,26 @@ public class FMVManager : MonoBehaviour
         StopCurrentScenario();
 
         currentScenario.UnInit();
+        ClearPopups();
         currentScenario = scenario;
         currentScenario.Init();
 
         videoParent.clip = currentScenario.VideoClip;
+
+        PlayCurrentScenario();
+    }
+
+    /// <summary>
+    /// Clears any remaining popups from the previous scenario.
+    /// </summary>
+    private void ClearPopups()
+    {
+        int childCount = videoParent.transform.childCount;
+        while (childCount > 0)
+        {
+            Destroy(videoParent.transform.GetChild(0).gameObject);
+            childCount--;
+        }
     }
 
     /// <summary>
