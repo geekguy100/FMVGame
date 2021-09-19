@@ -157,7 +157,12 @@ public class FMVScenarioSO : ScriptableObject
         // the next scenario, invoke the RequestScenarioProgression() method.
         if (!choicesToBeMade)
         {
-            scenarioProgressorChannel.RaiseEvent(nextScenario);
+            // If there are no choices to be made, make sure the
+            // next scenario isn't null so we don't get an error.
+            if (nextScenario != null)
+            {
+                scenarioProgressorChannel.RaiseEvent(nextScenario);
+            }
         }
     }
 
