@@ -43,6 +43,18 @@ public class FMVScenarioSO : ScriptableObject
         return timeElapsedChannel != null;
     }
 
+    [Tooltip("The channel to broadcast scenario progression events to.")]
+    [HideIf("IsProgressorChannelSet")]
+    [SerializeField] private FMVScenarioChannelSO scenarioProgressorChannel;
+    /// <summary>
+    /// Returns true if the scenarioProgressorChannel is not null.
+    /// </summary>
+    /// <returns>True if scenarioProgressorChannel is not null.</returns>
+    private bool IsProgressorChannelSet()
+    {
+        return scenarioProgressorChannel != null;
+    }
+
     [Tooltip("True if the player will be required to make a choice.\n" +
              "False if scenario will automatically play into the next.")]
     [SerializeField] private bool choicesToBeMade;
@@ -74,11 +86,11 @@ public class FMVScenarioSO : ScriptableObject
     private int popupsLength;
 
     // No choices to be made
-    [Tooltip("The progressor data ScriptableObject to use to progress into the " +
-        "next channel if no choices are to be made.")]
+    [Tooltip("The progressor Scenario ScriptableObject to progress into " +
+        "if no choices are to be made.")]
     [HideIf("choicesToBeMade")]
-    [Required("Video will abruptly end if there is no progressor data.", InfoMessageType.Info)]
-    [SerializeField] private FMVScenarioProgressorData scenarioProgressorData;
+    [Required("Video will abruptly pause at the end of the current video is there is no next scenario.", InfoMessageType.Info)]
+    [SerializeField] private FMVScenarioSO nextScenario;
 
 
 
@@ -145,7 +157,7 @@ public class FMVScenarioSO : ScriptableObject
         // the next scenario, invoke the RequestScenarioProgression() method.
         if (!choicesToBeMade)
         {
-            scenarioProgressorData.RequestScenarioProgression();
+            scenarioProgressorChannel.RaiseEvent(nextScenario);
         }
     }
 

@@ -3,7 +3,11 @@ guid: d358a003be2f3ea4f85932774ba11c00
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - videoClip: {instanceID: 0}
+  - timeElapsedChannel: {fileID: 11400000, guid: 339aa48be2143104588dad10ef90050b, type: 2}
+  - scenarioProgressorChannel: {fileID: 11400000, guid: 106f3903f8355f84fa346259715224ff, type: 2}
+  - nextScenario: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

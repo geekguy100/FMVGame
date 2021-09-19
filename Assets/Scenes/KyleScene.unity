@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 1534367658}
   - component: {fileID: 1534367657}
   - component: {fileID: 1534367656}
-  - component: {fileID: 1534367660}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -217,29 +216,13 @@ RectTransform:
   m_Children:
   - {fileID: 1535313960}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1534367660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1534367655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd3566b457e08e748b5903d2fc1e9783, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentScenario: {fileID: 11400000, guid: fe9af0f04bf313f458c47fb13f029fa4, type: 2}
-  videoParent: {fileID: 1535313961}
-  elapsedTimeChannel: {fileID: 11400000, guid: 339aa48be2143104588dad10ef90050b, type: 2}
-  scenarioProgressorChannel: {fileID: 11400000, guid: 106f3903f8355f84fa346259715224ff, type: 2}
 --- !u!1 &1535313959
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +235,7 @@ GameObject:
   - component: {fileID: 1535313963}
   - component: {fileID: 1535313962}
   - component: {fileID: 1535313961}
+  - component: {fileID: 1535313964}
   m_Layer: 5
   m_Name: VideoParent
   m_TagString: VideoParent
@@ -348,6 +332,65 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1535313959}
   m_CullTransparentMesh: 1
+--- !u!114 &1535313964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535313959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f49390f55e4601e43b23a8d6440e7cb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1841967342
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1841967344}
+  - component: {fileID: 1841967343}
+  m_Layer: 0
+  m_Name: FMVManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1841967343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841967342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3566b457e08e748b5903d2fc1e9783, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScenario: {fileID: 11400000, guid: fe9af0f04bf313f458c47fb13f029fa4, type: 2}
+  videoParent: {fileID: 1535313961}
+  elapsedTimeChannel: {fileID: 11400000, guid: 339aa48be2143104588dad10ef90050b, type: 2}
+  scenarioProgressorChannel: {fileID: 11400000, guid: 106f3903f8355f84fa346259715224ff, type: 2}
+--- !u!4 &1841967344
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841967342}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1927350637
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,7 +455,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2077773847
 GameObject:
@@ -495,5 +538,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

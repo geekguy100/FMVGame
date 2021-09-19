@@ -8,7 +8,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FMV Maker/Scenario Progressor Data", fileName = "New Scenario Progressor Data")]
+//[CreateAssetMenu(menuName = "FMV Maker/Scenario Progressor Data", fileName = "New Scenario Progressor Data")]
 public class FMVScenarioProgressorData : ScriptableObject
 {
     [Tooltip("The scenario to lead into.")]

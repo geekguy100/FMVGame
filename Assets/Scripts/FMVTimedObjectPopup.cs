@@ -11,15 +11,20 @@ using UnityEngine;
 public class FMVTimedObjectPopup : MonoBehaviour
 {
     [Tooltip("The amount of time to wait before instantiating the GameObject.")]
-    [SerializeField] protected double popupTime;
+    [SerializeField] protected float popupTime;
     /// <summary>
     /// The amount of time to wait before instantiating the GameObject.
     /// </summary>
-    public double PopupTime
+    public float PopupTime
     {
         get
         {
             return popupTime;
+        }
+
+        set
+        {
+            popupTime = value;
         }
     }
 }

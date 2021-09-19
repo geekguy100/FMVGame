@@ -7,10 +7,16 @@
 *****************************************************************************/
 using UnityEngine;
 using UnityEngine.UI;
+using Sirenix.OdinInspector;
 
 public class FMVScenarioProgressor : MonoBehaviour
 {
-    [SerializeField] private FMVScenarioProgressorData data;
+    [Tooltip("The channel to raise an event to to signal a change in scenarios.")]
+    [HideIf("IsSet")]
+    [SerializeField] private FMVScenarioChannelSO scenarioProgressorChannel;
+
+    [Tooltip("The scenario this progressor leads into.")]
+    [SerializeField] private FMVScenarioSO nextScenario;
 
     private Button btn;
 
@@ -30,12 +36,16 @@ public class FMVScenarioProgressor : MonoBehaviour
         }
     }
 
-
     /// <summary>
-    /// Requests to progress the scenario to the provided one.
+    /// Requests to progress to the next scenario provided.
     /// </summary>
     public void ProgressScenario()
     {
-        data.RequestScenarioProgression();
+        scenarioProgressorChannel.RaiseEvent(nextScenario);
+    }
+
+    private bool IsSet()
+    {
+        return scenarioProgressorChannel != null;
     }
 }
