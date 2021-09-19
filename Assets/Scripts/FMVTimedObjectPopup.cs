@@ -8,6 +8,7 @@
 *****************************************************************************/
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class FMVTimedObjectPopup : MonoBehaviour
 {
     [Tooltip("The amount of time to wait before instantiating the GameObject.")]

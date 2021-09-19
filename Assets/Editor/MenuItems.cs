@@ -9,51 +9,70 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.Video;
 
-public class MenuItems : MonoBehaviour
+namespace FMVMaker.CustomEditor.MenuItems
 {
-    [MenuItem("Tools/FMV Maker/Create FMV Button")]
-    private static void CreateFMVButton()
+    public class MenuItems : MonoBehaviour
     {
-        const string BTN_NAME = "FMVButton";
-        GameObject buttonPrefab = Resources.Load<GameObject>(BTN_NAME);
-        if (buttonPrefab == null)
+        [MenuItem("Tools/FMV Maker/Create FMV Button")]
+        private static void CreateFMVButton()
         {
-            Debug.LogWarning("[MenuItems]: Could not load FMV Button prefab. Check 'Resources' folder for GameObject named '" + BTN_NAME + "'.");
-            return;
+            const string BTN_NAME = "FMVButton";
+            GameObject buttonPrefab = Resources.Load<GameObject>(BTN_NAME);
+            if (buttonPrefab == null)
+            {
+                Debug.LogWarning("[MenuItems]: Could not load FMV Button prefab. Check 'Resources' folder for GameObject named '" + BTN_NAME + "'.");
+                return;
+            }
+
+            GameObject videoParent = GameObject.FindGameObjectWithTag("VideoParent");
+            if (videoParent == null)
+            {
+                Debug.LogWarning("[MenuItems]: Could not find GameObject tagged 'VideoParent'. Aborting...");
+                return;
+            }
+
+            VideoPlayer videoPlayer = videoParent.GetComponent<VideoPlayer>();
+            if (videoPlayer == null)
+            {
+                Debug.LogWarning("[MenuItems]: GameObject tagged 'VideoParent' does not have the required VideoPlayer component. Aborting...");
+                return;
+            }
+
+            FMVTimedObjectPopup popup = Instantiate(buttonPrefab, videoParent.transform).GetComponent<FMVTimedObjectPopup>();
+            float popupTime;
+
+            // If the game is currently running, we can get the current time
+            // of the video player.
+            if (Application.isPlaying)
+            {
+                print("[MenuItems]: Application is playing, so getting time from VideoPlayer...");
+                popupTime = (float)videoPlayer.time;
+            }
+            // If the game is stopped, get the time elapsed from the PlayerPrefs.
+            else
+            {
+                print("[MenuItems]: Application is stopped, so getting time from PlayerPrefs...");
+                print("Time caught is " + PlayerPrefs.GetFloat("Time Elapsed"));
+                popupTime = PlayerPrefs.GetFloat("Time Elapsed");
+            }
+
+            popup.PopupTime = popupTime;
         }
 
-        GameObject videoParent = GameObject.FindGameObjectWithTag("VideoParent");
-        if (videoParent == null)
+        [MenuItem("Tools/FMV Maker/Add FMV Component/Timed Popup")]
+        private static void AddTimedPopupComponent()
         {
-            Debug.LogWarning("[MenuItems]: Could not find GameObject tagged 'VideoParent'. Aborting...");
-            return;
+            GameObject selection = Selection.activeGameObject;
+
+            selection.AddComponent<FMVTimedObjectPopup>();
         }
 
-        VideoPlayer videoPlayer = videoParent.GetComponent<VideoPlayer>();
-        if (videoPlayer == null)
+        [MenuItem("Tools/FMV Maker/Add FMV Component/Scenario Progressor")]
+        private static void AddScenarioProgressor()
         {
-            Debug.LogWarning("[MenuItems]: GameObject tagged 'VideoParent' does not have the required VideoPlayer component. Aborting...");
-            return;
-        }
+            GameObject selection = Selection.activeGameObject;
 
-        FMVTimedObjectPopup popup = Instantiate(buttonPrefab, videoParent.transform).GetComponent<FMVTimedObjectPopup>();
-        float popupTime;
-
-        // If the game is currently running, we can get the current time
-        // of the video player.
-        if (Application.isPlaying)
-        {
-            print("[MenuItems]: Application is playing, so getting time from VideoPlayer...");
-            popupTime = (float)videoPlayer.time;
+            selection.AddComponent<FMVTimedObjectPopup>();
         }
-        // If the game is stopped, get the time elapsed from the PlayerPrefs.
-        else
-        {
-            print("[MenuItems]: Application is stopped, so getting time from PlayerPrefs...");
-            print("Time caught is " + PlayerPrefs.GetFloat("Time Elapsed"));
-            popupTime = PlayerPrefs.GetFloat("Time Elapsed"); 
-        }
-
-        popup.PopupTime = popupTime;
     }
 }
