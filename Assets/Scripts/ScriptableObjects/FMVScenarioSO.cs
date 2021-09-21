@@ -31,6 +31,7 @@ public class FMVScenarioSO : ScriptableObject
         }
     }
 
+    #region -- // Channels // --
     [Tooltip("The channel to receive video time elapsed calls from.")]
     [HideIf("TimeElapsedChannelSet")]
     [SerializeField] private DoubleChannelSO timeElapsedChannel;
@@ -54,7 +55,9 @@ public class FMVScenarioSO : ScriptableObject
     {
         return scenarioProgressorChannel != null;
     }
+    #endregion
 
+    #region -- // Choice Selection // --
     [Tooltip("True if the player will be required to make a choice.\n" +
              "False if scenario will automatically play into the next.")]
     [SerializeField] private bool choicesToBeMade;
@@ -91,6 +94,69 @@ public class FMVScenarioSO : ScriptableObject
     [HideIf("choicesToBeMade")]
     [Required("Video will abruptly pause at the end of the current video is there is no next scenario.", InfoMessageType.Info)]
     [SerializeField] private FMVScenarioSO nextScenario;
+    #endregion
+
+    #region -- // Looping // --
+    [Tooltip("True if this scenario should loop.")]
+    [SerializeField] private bool enableLooping;
+
+    [Tooltip("The channel to broadcast time seek requests to.")]
+    [ShowIfGroup("enableLooping")]
+    [BoxGroup("enableLooping/Looping Data")]
+    //[HideIf("IsTimeSeekChannelSet")]
+    [SerializeField] private DoubleChannelSO seekRequestChannel;
+    /// <summary>
+    /// Returns true if the timeSeekChannel is not null.
+    /// </summary>
+    /// <returns>True if the timeSeekChannel is not null.</returns>
+    private bool IsTimeSeekChannelSet()
+    {
+        return seekRequestChannel != null;
+    }
+
+    [BoxGroup("enableLooping/Looping Data")]
+    [Tooltip("The beginning of the loop sequence (in time elapsed).")]
+    [InlineButton("SetDefaultLoopBeginningTime", "Current time of clip")]
+    [SerializeField][Min(0)] private double loopBeginningTime;
+
+    [BoxGroup("enableLooping/Looping Data")]
+    [Tooltip("The time the loop will begin (in time elapsed).")]
+    [InlineButton("SetDefaultLoopEnterTime", "End of clip")]
+    [SerializeField][Min(0)] private double loopEnterTime;
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// Sets the loopEnterTime to the length of the video clip.
+    /// </summary>
+    private void SetDefaultLoopEnterTime()
+    {
+        loopEnterTime = videoClip.length - 0.2;
+    }
+
+    private void SetDefaultLoopBeginningTime()
+    {
+        if (Application.isPlaying)
+        {
+            loopBeginningTime = timeElapsed;
+        }
+        else if (PlayerPrefs.HasKey("Time Elapsed"))
+        {
+            loopBeginningTime = PlayerPrefs.GetFloat("Time Elapsed");
+        }
+        else
+        {
+            Debug.LogWarning("[FMVScenario]: Could not retrieve time elapsed. Has the scene been played at least once?");
+        }
+    }
+#endif
+    #endregion
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// The time elapsed in the current scenario.
+    /// </summary>
+    private double timeElapsed;
+#endif
 
 
 
@@ -99,10 +165,57 @@ public class FMVScenarioSO : ScriptableObject
     /// </summary>
     public void Init()
     {
+        UnInit();
+
         popupsLength = popups.Length;
         popupsClone = popups.Clone() as FMVTimedObjectPopup[];
 
+        timeElapsedChannel.OnEventRaised += HandlePopups;
+
+#if UNITY_EDITOR
         timeElapsedChannel.OnEventRaised += TrackTime;
+#endif
+
+        if (enableLooping)
+        {
+            if (!ValidateLoopData())
+            {
+                Debug.LogWarning("[FMVScenario]: Scenario '" + name + "' has invalid loop data. Disabling looping. " +
+                    "Please refer to the above warnings and/or the documentation for more details.");
+                return;
+            }
+
+            Debug.Log("Looping enabled...");
+
+            timeElapsedChannel.OnEventRaised += HandleLooping;
+        }
+    }
+
+    /// <summary>
+    /// Returns true if the provided loop data is valid.
+    /// </summary>
+    /// <returns>True if the provided loop data is valid.</returns>
+    private bool ValidateLoopData()
+    {
+        if (loopBeginningTime < 0 || loopEnterTime > videoClip.length)
+        {
+            Debug.LogWarning("[FMVScenario]: Scenario '" + name + "' has a loop time outside of the video clip's length.");
+            return false;
+        }
+
+        if (loopEnterTime <= 0)
+        {
+            Debug.Log("[FMVScenario]: Scenario '" + name + "' has a loop enter time of 0 or less. Setting loop enter time to the video's end.");
+            SetDefaultLoopEnterTime();
+        }
+
+        if (loopBeginningTime >= loopEnterTime)
+        {
+            Debug.LogWarning("[FMVScenario]: Scenario '" + name + "' has a loop end time greater than the loop start time.");
+            return false;
+        }
+
+        return true;
     }
 
     /// <summary>
@@ -110,21 +223,23 @@ public class FMVScenarioSO : ScriptableObject
     /// </summary>
     public void UnInit()
     {
+        timeElapsedChannel.OnEventRaised -= HandlePopups;
+        timeElapsedChannel.OnEventRaised -= HandleLooping;
         timeElapsedChannel.OnEventRaised -= TrackTime;
+        timeElapsed = 0;
     }
 
     /// <summary>
-    /// Tracks the elapsed time of the current video, and instantiates any popups if
-    /// their popup time has been reached.
+    /// Handles instantiating popups at the correct time.
     /// </summary>
-    /// <param name="elapsedTime">The elapsed time in the video.</param>
-    private void TrackTime(double elapsedTime)
+    /// <param name="elapsedTime">The elapsed time in the current scenario.</param>
+    private void HandlePopups(double elapsedTime)
     {
         // If there are no popups in the array, 
         // unsubscribe from the event to prevent function calls.
         if (popupsLength <= 0)
         {
-            timeElapsedChannel.OnEventRaised -= TrackTime;
+            timeElapsedChannel.OnEventRaised -= HandlePopups;
             return;
         }
 
@@ -144,6 +259,33 @@ public class FMVScenarioSO : ScriptableObject
                 popupsClone[i] = null;
                 popupsLength--;
             }
+        }
+    }
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// Keeps track of the elapsed time of the playing scenario.
+    /// </summary>
+    /// <param name="time">The elapsed time of the playing scenario.</param>
+    private void TrackTime(double time)
+    {
+        timeElapsed = time;
+    }
+#endif
+
+    /// <summary>
+    /// Handles looping the scenario at the correct times.
+    /// </summary>
+    /// <param name="elapsedTime">The elapsed time in the current scenario.</param>
+    private void HandleLooping(double elapsedTime)
+    {
+        // If the elapsed time is greater than or equal to the loop's
+        // end time (where the looping occurs), request to seek the time to the loop's
+        // beginning.
+        if (elapsedTime >= loopEnterTime)
+        {
+            Debug.Log("[Scenario]: Requesting to loop from time " + loopEnterTime + " seconds to " + loopBeginningTime + " seconds.");
+            seekRequestChannel.RaiseEvent(loopBeginningTime);
         }
     }
 

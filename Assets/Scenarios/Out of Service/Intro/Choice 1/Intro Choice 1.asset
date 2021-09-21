@@ -18,3 +18,7 @@ MonoBehaviour:
   choicesToBeMade: 0
   popups: []
   nextScenario: {fileID: 11400000, guid: 7cf090e1d7627cc45b754a25adeac43b, type: 2}
+  enableLooping: 0
+  seekRequestChannel: {fileID: 0}
+  loopBeginningTime: 0
+  loopEnterTime: 0

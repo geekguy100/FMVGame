@@ -20,3 +20,7 @@ MonoBehaviour:
   - {fileID: 3428696654778620363, guid: 25b621bb1f44af94ebc67c4a52130e7b, type: 3}
   - {fileID: 2797306541281129579, guid: a9b24f86078cf6340ac11cb054533b56, type: 3}
   nextScenario: {fileID: 0}
+  enableLooping: 1
+  seekRequestChannel: {fileID: 11400000, guid: a84385fc3cfe642429c3ad795e3dfb6e, type: 2}
+  loopBeginningTime: 30.480449676513672
+  loopEnterTime: 40.6574835229617

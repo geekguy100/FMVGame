@@ -5,30 +5,46 @@
 //
 // Brief Description : Saves the time of the VideoPlayer whenever the attached GameObject gets disabled.
 *****************************************************************************/
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEngine.Video;
+using Sirenix.OdinInspector;
 
 [RequireComponent(typeof(VideoPlayer))]
 public class VideoPlayerTimeSender : MonoBehaviour
 {
-    /// <summary>
-    /// The VideoPlayer component.
-    /// </summary>
-    private VideoPlayer videoPlayer;
+    [Tooltip("The channel to receive the time elapsed from.")]
+    [SerializeField] private DoubleChannelSO timeElapsedChannel;
 
-    private void Awake()
+    [Tooltip("The elapsed time in the current video.")]
+    [SerializeField] [ReadOnly] private double elapsedTime;
+
+    private void OnEnable()
     {
-        videoPlayer = GetComponent<VideoPlayer>();
+        timeElapsedChannel.OnEventRaised += UpdateTime;
     }
 
-#if UNITY_EDITOR
+    private void OnDisable()
+    {
+        timeElapsedChannel.OnEventRaised -= UpdateTime;
+    }
+
     /// <summary>
     /// Raise the event whenever the attached application quits.
     /// </summary>
     private void OnApplicationQuit()
     {
-        print("Setting Pref to " + videoPlayer.time);
-        PlayerPrefs.SetFloat("Time Elapsed", (float) videoPlayer.time);
+        print("Setting Pref to " + elapsedTime);
+        PlayerPrefs.SetFloat("Time Elapsed", (float) elapsedTime);
     }
-#endif
+
+    /// <summary>
+    /// Updates the time elapsed.
+    /// </summary>
+    /// <param name="elapsedTime">The time elapsed.</param>
+    void UpdateTime(double elapsedTime)
+    {
+        this.elapsedTime = elapsedTime;
+    }
 }
+#endif

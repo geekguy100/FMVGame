@@ -21,21 +21,42 @@ public class FMVManager : MonoBehaviour
     [SerializeField] private VideoPlayer videoParent;
 
     [Tooltip("Channel to broadcast the time elapsed to.")]
-    [SerializeField] private DoubleChannelSO elapsedTimeChannel;
+    [SerializeField] private DoubleChannelSO timeElapsedChannel;
 
     [Tooltip("Channel to receive calls to progress the scenario from.")]
     [SerializeField] private FMVScenarioChannelSO scenarioProgressorChannel;
 
+    [Tooltip("The channel to accept time seek requests from.")]
+    [SerializeField] private DoubleChannelSO seekRequestChannel;
 
+    #region -- // Management Tools // --
+    [Button("Clear All Channels", ButtonSizes.Gigantic)]
+    [FoldoutGroup("Management Tools")]
+    [HorizontalGroup("Management Tools/Horizontal")]
+    [BoxGroup("Management Tools/Horizontal/Channel Tools")]
+    // Sets all channels' events to null.
+    private void ClearAllChannels()
+    {
+        timeElapsedChannel.OnEventRaised = null;
+        scenarioProgressorChannel.OnEventRaised = null;
+        seekRequestChannel.OnEventRaised = null;
+    }
+    #endregion
+
+    #region -- // Event Subscribing / Unsubscribing // --
     private void OnEnable()
     {
         scenarioProgressorChannel.OnEventRaised += SwapScenario;
+        seekRequestChannel.OnEventRaised += SeekTo;
     }
 
     private void OnDisable()
     {
         scenarioProgressorChannel.OnEventRaised -= SwapScenario;
+        seekRequestChannel.OnEventRaised -= SeekTo;
     }
+    #endregion
+
 
     private void Start()
     {
@@ -105,8 +126,21 @@ public class FMVManager : MonoBehaviour
     {
         while(true)
         {
-            elapsedTimeChannel.RaiseEvent(videoParent.time);
+            timeElapsedChannel.RaiseEvent(videoParent.time);
+
             yield return null;
         }
+    }
+
+    /// <summary>
+    /// Seeks to the given time in the video clip.
+    /// </summary>
+    /// <param name="time">The time to seek to.</param>
+    private void SeekTo(double time)
+    {
+        Debug.Log("[FMVManager]: Looping call accepted. Seeking to time " + time + " seconds.");
+        videoParent.Stop();
+        videoParent.time = time;
+        videoParent.Play();
     }
 }
