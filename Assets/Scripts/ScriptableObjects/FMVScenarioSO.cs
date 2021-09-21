@@ -92,7 +92,7 @@ public class FMVScenarioSO : ScriptableObject
     [Tooltip("The progressor Scenario ScriptableObject to progress into " +
         "if no choices are to be made.")]
     [HideIf("choicesToBeMade")]
-    [Required("Video will abruptly pause at the end of the current video is there is no next scenario.", InfoMessageType.Info)]
+    [Required("Video will abruptly pause at the end of the current video is there is no next scenario and looping is not enabled.", InfoMessageType.Info)]
     [SerializeField] private FMVScenarioSO nextScenario;
     #endregion
 
@@ -103,7 +103,7 @@ public class FMVScenarioSO : ScriptableObject
     [Tooltip("The channel to broadcast time seek requests to.")]
     [ShowIfGroup("enableLooping")]
     [BoxGroup("enableLooping/Looping Data")]
-    //[HideIf("IsTimeSeekChannelSet")]
+    [HideIf("IsTimeSeekChannelSet")]
     [SerializeField] private DoubleChannelSO seekRequestChannel;
     /// <summary>
     /// Returns true if the timeSeekChannel is not null.
