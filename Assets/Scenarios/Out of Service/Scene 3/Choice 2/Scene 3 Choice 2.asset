@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d358a003be2f3ea4f85932774ba11c00, type: 3}
   m_Name: Scene 3 Choice 2
   m_EditorClassIdentifier: 
-  videoClip: {fileID: 32900000, guid: b6ffa91791e45d04ab94bc9e3f9adac9, type: 3}
+  videoClip: {fileID: 32900000, guid: b5979239f3fba417c92eab2ac8325364, type: 3}
   timeElapsedChannel: {fileID: 11400000, guid: 339aa48be2143104588dad10ef90050b, type: 2}
   scenarioProgressorChannel: {fileID: 11400000, guid: 106f3903f8355f84fa346259715224ff, type: 2}
   choicesToBeMade: 0
