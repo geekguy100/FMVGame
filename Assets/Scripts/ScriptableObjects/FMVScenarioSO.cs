@@ -132,7 +132,10 @@ public class FMVScenarioSO : ScriptableObject
     {
         loopEnterTime = videoClip.length - 0.2;
     }
-
+    /// <summary>
+    /// Sets the loopBeginningTime to the time the last video played was stopped, or the current time of the 
+    /// currently playing video.
+    /// </summary>
     private void SetDefaultLoopBeginningTime()
     {
         if (Application.isPlaying)
@@ -302,12 +305,12 @@ public class FMVScenarioSO : ScriptableObject
     /// <param name="source">The VideoPlayer that ended.</param>
     public void OnVideoOver(VideoPlayer source)
     {
+        scenarioEndCallbackChannel?.PerformCallback(this);
+
         // If there are no choices to be made and we want to progress immediately into
         // the next scenario, invoke the RequestScenarioProgression() method.
         if (!choicesToBeMade)
         {
-            scenarioEndCallbackChannel?.PerformCallback(this);
-
             // If there are no choices to be made, make sure the
             // next scenario isn't null so we don't get an error.
             if (nextScenario != null)
