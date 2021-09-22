@@ -15,6 +15,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Video;
 
+[HideMonoScript]
 [CreateAssetMenu(menuName = "FMV Maker/Scenario", fileName = "New Scenario")]
 public class FMVScenarioSO : ScriptableObject
 {
@@ -149,6 +150,16 @@ public class FMVScenarioSO : ScriptableObject
         }
     }
 #endif
+    #endregion
+
+    #region -- // Callback Channels // --
+    [InfoBox("These callback channels are optional. If assigned, they will be raised at the start and end of the Scenario respectively.")]
+    [FoldoutGroup("Callback Channels")]
+    [Tooltip("The Scenario's (optional) on-start callback channel.")]
+    [SerializeField] private VoidChannelSO scenarioStartCallbackChannel;
+    [FoldoutGroup("Callback Channels")]
+    [Tooltip("The Scenario's (optional) on-end callback channel.")]
+    [SerializeField] private VoidChannelSO scenarioEndCallbackChannel;
     #endregion
 
 #if UNITY_EDITOR
