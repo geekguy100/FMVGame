@@ -125,7 +125,6 @@ public class FMVScenarioSO : ScriptableObject
     [InlineButton("SetDefaultLoopEnterTime", "End of clip")]
     [SerializeField][Min(0)] private double loopEnterTime;
 
-#if UNITY_EDITOR
     /// <summary>
     /// Sets the loopEnterTime to the length of the video clip.
     /// </summary>
@@ -149,7 +148,6 @@ public class FMVScenarioSO : ScriptableObject
             Debug.LogWarning("[FMVScenario]: Could not retrieve time elapsed. Has the scene been played at least once?");
         }
     }
-#endif
     #endregion
 
     #region -- // Callback Channels // --
@@ -162,12 +160,10 @@ public class FMVScenarioSO : ScriptableObject
     [SerializeField] private VoidChannelSO scenarioEndCallbackChannel;
     #endregion
 
-#if UNITY_EDITOR
     /// <summary>
     /// The time elapsed in the current scenario.
     /// </summary>
     private double timeElapsed;
-#endif
 
 
 
@@ -183,9 +179,7 @@ public class FMVScenarioSO : ScriptableObject
 
         timeElapsedChannel.OnEventRaised += HandlePopups;
 
-#if UNITY_EDITOR
         timeElapsedChannel.OnEventRaised += TrackTime;
-#endif
 
         if (enableLooping)
         {
@@ -273,7 +267,6 @@ public class FMVScenarioSO : ScriptableObject
         }
     }
 
-#if UNITY_EDITOR
     /// <summary>
     /// Keeps track of the elapsed time of the playing scenario.
     /// </summary>
@@ -282,7 +275,6 @@ public class FMVScenarioSO : ScriptableObject
     {
         timeElapsed = time;
     }
-#endif
 
     /// <summary>
     /// Handles looping the scenario at the correct times.
