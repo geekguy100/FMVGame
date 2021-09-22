@@ -16,7 +16,7 @@ using UnityEngine;
 using UnityEngine.Video;
 
 [HideMonoScript]
-[CreateAssetMenu(menuName = "FMV Maker/Scenario", fileName = "New Scenario")]
+[CreateAssetMenu(menuName = "FMV Maker/Scenarios/Scenario", fileName = "New Scenario")]
 public class FMVScenarioSO : ScriptableObject
 {
     [Tooltip("The video clip to play during this scenario.")]
@@ -153,11 +153,11 @@ public class FMVScenarioSO : ScriptableObject
     #region -- // Callback Channels // --
     [InfoBox("These callback channels are optional. If assigned, they will be raised at the start and end of the Scenario respectively.")]
     [FoldoutGroup("Callback Channels")]
-    [Tooltip("The Scenario's (optional) on-start callback channel.")]
-    [SerializeField] private VoidChannelSO scenarioStartCallbackChannel;
+    [Tooltip("The Scenario's (optional) on-start callback.")]
+    [SerializeField] private ScenarioCallbackSO scenarioStartCallbackChannel;
     [FoldoutGroup("Callback Channels")]
-    [Tooltip("The Scenario's (optional) on-end callback channel.")]
-    [SerializeField] private VoidChannelSO scenarioEndCallbackChannel;
+    [Tooltip("The Scenario's (optional) on-end callback.")]
+    [SerializeField] private ScenarioCallbackSO scenarioEndCallbackChannel;
     #endregion
 
     /// <summary>
@@ -181,6 +181,8 @@ public class FMVScenarioSO : ScriptableObject
 
         timeElapsedChannel.OnEventRaised += TrackTime;
 
+
+
         if (enableLooping)
         {
             if (!ValidateLoopData())
@@ -194,6 +196,8 @@ public class FMVScenarioSO : ScriptableObject
 
             timeElapsedChannel.OnEventRaised += HandleLooping;
         }
+
+        scenarioStartCallbackChannel?.PerformCallback(this);
     }
 
     /// <summary>
@@ -302,6 +306,8 @@ public class FMVScenarioSO : ScriptableObject
         // the next scenario, invoke the RequestScenarioProgression() method.
         if (!choicesToBeMade)
         {
+            scenarioEndCallbackChannel?.PerformCallback(this);
+
             // If there are no choices to be made, make sure the
             // next scenario isn't null so we don't get an error.
             if (nextScenario != null)

@@ -20,12 +20,15 @@ public class FMVManager : MonoBehaviour
     [Required("A reference to the VideoPlayer is required.")]
     [SerializeField] private VideoPlayer videoParent;
 
+    [FoldoutGroup("Timing Channels")]
     [Tooltip("Channel to broadcast the time elapsed to.")]
     [SerializeField] private DoubleChannelSO timeElapsedChannel;
 
+    [FoldoutGroup("Timing Channels")]
     [Tooltip("Channel to receive calls to progress the scenario from.")]
     [SerializeField] private FMVScenarioChannelSO scenarioProgressorChannel;
 
+    [FoldoutGroup("Timing Channels")]
     [Tooltip("The channel to accept time seek requests from.")]
     [SerializeField] private DoubleChannelSO seekRequestChannel;
 
