@@ -154,11 +154,11 @@ public class FMVScenarioSO : ScriptableObject
     #endregion
 
     #region -- // Callback Channels // --
-    [InfoBox("These callback channels are optional. If assigned, they will be raised at the start and end of the Scenario respectively.")]
-    [FoldoutGroup("Callback Channels")]
+    [InfoBox("These Scenario Callback are optional. If assigned, they will be raised at the start and end of the Scenario respectively.")]
+    [FoldoutGroup("Scenario Callbacks")]
     [Tooltip("The Scenario's (optional) on-start callback.")]
     [SerializeField] private ScenarioCallbackSO scenarioStartCallbackChannel;
-    [FoldoutGroup("Callback Channels")]
+    [FoldoutGroup("Scenario Callbacks")]
     [Tooltip("The Scenario's (optional) on-end callback.")]
     [SerializeField] private ScenarioCallbackSO scenarioEndCallbackChannel;
     #endregion
