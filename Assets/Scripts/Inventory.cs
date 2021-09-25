@@ -7,7 +7,6 @@
 *****************************************************************************/
 using UnityEngine;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
 
 /// <summary>
 /// Holds any items that the player collects during the game.
@@ -15,14 +14,26 @@ using Sirenix.OdinInspector;
 public class Inventory : MonoBehaviour
 {
     [Tooltip("The items being held in this inventory.")]
-    [ReadOnly][SerializeField] private List<IItem> items;
+    [SerializeField] private List<Item> items;
 
     /// <summary>
-    /// Initializing the list.
+    /// The Singleton instance of the Inventory class.
+    /// </summary>
+    public static Inventory instance;
+
+    /// <summary>
+    /// Setting up the Singleton and initializing the list.
     /// </summary>
     private void Awake()
     {
-        items = new List<IItem>();
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
 
     /// <summary>
@@ -30,8 +41,17 @@ public class Inventory : MonoBehaviour
     /// </summary>
     /// <param name="item">The item to check the inventory for.</param>
     /// <returns>True if the inventory contains the item.</returns>
-    public bool HasItem(IItem item)
+    public bool HasItem(Item item)
     {
         return items.Contains(item);
+    }
+    
+    /// <summary>
+    /// Adds an item to the inventory.
+    /// </summary>
+    /// <param name="item">The item to add to the inventory.</param>
+    public void AddItem(Item item)
+    {
+        items.Add(item);
     }
 }

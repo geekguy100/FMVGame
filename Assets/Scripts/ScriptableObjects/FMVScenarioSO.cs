@@ -13,6 +13,7 @@
 *****************************************************************************/
 using Sirenix.OdinInspector;
 using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.Video;
 
 [HideMonoScript]
@@ -83,7 +84,7 @@ public class FMVScenarioSO : ScriptableObject
     /// A clone of the popups array so we don't modify the 
     /// actual array of the ScriptableObject.
     /// </summary>
-    private FMVTimedObjectPopup[] popupsClone;
+    private List<FMVTimedObjectPopup> popupsClone;
     /// <summary>
     /// How many popups still need to be instantiated.
     /// </summary>
@@ -178,7 +179,8 @@ public class FMVScenarioSO : ScriptableObject
         UnInit();
 
         popupsLength = popups.Length;
-        popupsClone = popups.Clone() as FMVTimedObjectPopup[];
+        popupsClone = new List<FMVTimedObjectPopup>(popups);
+
 
         timeElapsedChannel.OnEventRaised += HandlePopups;
 
@@ -257,7 +259,7 @@ public class FMVScenarioSO : ScriptableObject
 
         // Loop through the array of popups and instantiate any
         // that hit their popup time.
-        for (int i = 0; i < popupsClone.Length; ++i)
+        for (int i = 0; i < popupsClone.Count; ++i)
         {
             FMVTimedObjectPopup popup = popupsClone[i];
             if (popup == null)
@@ -328,5 +330,23 @@ public class FMVScenarioSO : ScriptableObject
     {
         Transform videoParent = GameObject.FindGameObjectWithTag("VideoParent").transform;
         Instantiate(popup, videoParent);
+    }
+
+    /// <summary>
+    /// Adds a popup to the list of popups to be instantiated.
+    /// 
+    /// NOTE: The popup can only be added during the 
+    /// start of the Scenario after initialization. 
+    /// 
+    /// Therefore, this method should be called through a Scenario start callback.
+    /// </summary>
+    public void AddPopup(FMVTimedObjectPopup popup)
+    {
+        if (popupsClone != null)
+        {
+            Debug.Log("Adding popup to clone");
+            popupsClone.Add(popup);
+            ++popupsLength;
+        }
     }
 }

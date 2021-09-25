@@ -33,17 +33,17 @@ public class FMVManager : MonoBehaviour
     [SerializeField] private DoubleChannelSO seekRequestChannel;
 
     #region -- // Management Tools // --
-    [Button("Clear All Channels", ButtonSizes.Gigantic)]
-    [FoldoutGroup("Management Tools")]
-    [HorizontalGroup("Management Tools/Horizontal")]
-    [BoxGroup("Management Tools/Horizontal/Channel Tools")]
-    // Sets all channels' events to null.
-    private void ClearAllChannels()
-    {
-        timeElapsedChannel.OnEventRaised = null;
-        scenarioProgressorChannel.OnEventRaised = null;
-        seekRequestChannel.OnEventRaised = null;
-    }
+    //[Button("Clear All Channels", ButtonSizes.Gigantic)]
+    //[FoldoutGroup("Management Tools")]
+    //[HorizontalGroup("Management Tools/Horizontal")]
+    //[BoxGroup("Management Tools/Horizontal/Channel Tools")]
+    //// Sets all channels' events to null.
+    //private void ClearAllChannels()
+    //{
+    //    timeElapsedChannel.OnEventRaised = null;
+    //    scenarioProgressorChannel.OnEventRaised = null;
+    //    seekRequestChannel.OnEventRaised = null;
+    //}
     #endregion
 
     #region -- // Event Subscribing / Unsubscribing // --
@@ -57,6 +57,13 @@ public class FMVManager : MonoBehaviour
     {
         scenarioProgressorChannel.OnEventRaised -= SwapScenario;
         seekRequestChannel.OnEventRaised -= SeekTo;
+    }
+
+    private void OnDestroy()
+    {
+        // Unsubscribe the Scenario from any events it 
+        // subscribed to during the game.
+        currentScenario?.UnInit();
     }
     #endregion
 
