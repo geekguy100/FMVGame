@@ -11,9 +11,13 @@ using UnityEngine.Video;
 
 namespace FMVMaker.CustomEditor.MenuItems
 {
+    /// <summary>
+    /// Script dedicated to creating custom editor buttons.
+    /// </summary>
     public class MenuItems : MonoBehaviour
     {
         [MenuItem("Tools/FMV Maker/Create FMV Button")]
+        // Instantiates a button with pre-attached components to interact with the FMV system.
         private static void CreateFMVButton()
         {
             const string BTN_NAME = "FMVButton";
@@ -60,6 +64,7 @@ namespace FMVMaker.CustomEditor.MenuItems
         }
 
         [MenuItem("Tools/FMV Maker/Add FMV Component/Timed Popup")]
+        // Adds the FMVTimedPopup script to the selected GameObject.
         private static void AddTimedPopupComponent()
         {
             GameObject selection = Selection.activeGameObject;
@@ -68,11 +73,12 @@ namespace FMVMaker.CustomEditor.MenuItems
         }
 
         [MenuItem("Tools/FMV Maker/Add FMV Component/Scenario Progressor")]
+        // Adds the FMVScenarioProgressor script to the selected GameObject.
         private static void AddScenarioProgressor()
         {
             GameObject selection = Selection.activeGameObject;
 
-            selection.AddComponent<FMVTimedObjectPopup>();
+            selection.AddComponent<FMVScenarioProgressor>();
         }
     }
 }
