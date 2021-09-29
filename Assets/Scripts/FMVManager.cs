@@ -51,12 +51,16 @@ public class FMVManager : MonoBehaviour
     {
         scenarioProgressorChannel.OnEventRaised += SwapScenario;
         seekRequestChannel.OnEventRaised += SeekTo;
+
+        GameManager.Instance.GamePausedEvent += TogglePause;
     }
 
     private void OnDisable()
     {
         scenarioProgressorChannel.OnEventRaised -= SwapScenario;
         seekRequestChannel.OnEventRaised -= SeekTo;
+
+        GameManager.Instance.GamePausedEvent -= TogglePause;
     }
 
     private void OnDestroy()
@@ -152,5 +156,21 @@ public class FMVManager : MonoBehaviour
         videoParent.Stop();
         videoParent.time = time;
         videoParent.Play();
+    }
+
+    /// <summary>
+    /// Toggles pausing the video playback.
+    /// </summary>
+    /// <param name="paused">True if playback should be paused.</param>
+    private void TogglePause(bool paused)
+    {
+        if (paused)
+        {
+            videoParent.Pause();
+        }
+        else
+        {
+            videoParent.Play();
+        }
     }
 }
