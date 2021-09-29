@@ -17,8 +17,8 @@ MonoBehaviour:
   scenarioProgressorChannel: {fileID: 11400000, guid: 106f3903f8355f84fa346259715224ff, type: 2}
   choicesToBeMade: 1
   popups:
-  - {fileID: 3321879201204520354, guid: 5c57414d33d2ffc42a514dbb28e0f4c0, type: 3}
-  - {fileID: 7375692979884484563, guid: ab5ae6041e370ed43a17412104b7e8db, type: 3}
+  - {fileID: -6938711257934445771, guid: 3a336d93b8992498985570b59394babd, type: 3}
+  - {fileID: -6938711257934445771, guid: bb12dea6171934bd09cd63314700f8db, type: 3}
   nextScenario: {fileID: 0}
   enableLooping: 0
   seekRequestChannel: {fileID: 11400000, guid: a84385fc3cfe642429c3ad795e3dfb6e, type: 2}
