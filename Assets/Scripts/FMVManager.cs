@@ -47,6 +47,7 @@ public class FMVManager : MonoBehaviour
     #endregion
 
     [FoldoutGroup("Static Effect")]
+    [SerializeField] private bool displayEffect = true;
     [SerializeField] private GameObject staticEffect;
     [FoldoutGroup("Static Effect")]
     [SerializeField] private float displayTime;
@@ -92,7 +93,11 @@ public class FMVManager : MonoBehaviour
     {
         if(!videoParent.isPlaying)
         {
-            StartCoroutine(ActivateStatic());
+            if (displayEffect)
+            {
+                StartCoroutine(ActivateStatic());
+            }
+
             videoParent.Play();
             StartCoroutine(TrackTime());
         }
