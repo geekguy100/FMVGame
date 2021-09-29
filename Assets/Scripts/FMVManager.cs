@@ -46,13 +46,20 @@ public class FMVManager : MonoBehaviour
     //}
     #endregion
 
+    [FoldoutGroup("Static Effect")]
+    [SerializeField] private GameObject staticEffect;
+    [FoldoutGroup("Static Effect")]
+    [SerializeField] private float displayTime;
+
+
     #region -- // Event Subscribing / Unsubscribing // --
     private void OnEnable()
     {
         scenarioProgressorChannel.OnEventRaised += SwapScenario;
         seekRequestChannel.OnEventRaised += SeekTo;
 
-        GameManager.Instance.GamePausedEvent += TogglePause;
+        if (GameManager.Instance != null)
+            GameManager.Instance.GamePausedEvent += TogglePause;
     }
 
     private void OnDisable()
@@ -60,7 +67,8 @@ public class FMVManager : MonoBehaviour
         scenarioProgressorChannel.OnEventRaised -= SwapScenario;
         seekRequestChannel.OnEventRaised -= SeekTo;
 
-        GameManager.Instance.GamePausedEvent -= TogglePause;
+        if (GameManager.Instance != null)
+            GameManager.Instance.GamePausedEvent -= TogglePause;
     }
 
     private void OnDestroy()
@@ -84,9 +92,17 @@ public class FMVManager : MonoBehaviour
     {
         if(!videoParent.isPlaying)
         {
+            StartCoroutine(ActivateStatic());
             videoParent.Play();
             StartCoroutine(TrackTime());
         }
+    }
+
+    private IEnumerator ActivateStatic()
+    {
+        staticEffect.SetActive(true);
+        yield return new WaitForSeconds(displayTime);
+        staticEffect.SetActive(false);
     }
 
     /// <summary>
