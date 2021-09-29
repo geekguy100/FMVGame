@@ -20,9 +20,9 @@ public class AddPopupCallbackSO : ScenarioCallbackSO
     /// <summary>
     /// An enum of conditions that must be met to add a popup.
     /// </summary>
-    private enum AddPopupCondition { NONE, REQUIRE_INVENTORY_ITEM };
+    protected enum AddPopupCondition { NONE, REQUIRE_INVENTORY_ITEM };
     [Tooltip("The condition that must be met for the popup to be added.")]
-    [SerializeField] private AddPopupCondition condition = AddPopupCondition.NONE;
+    [SerializeField] protected AddPopupCondition condition = AddPopupCondition.NONE;
 
     // REQUIRE_INVENTORY_ITEM Fields
     [ShowIf("condition", AddPopupCondition.REQUIRE_INVENTORY_ITEM)]
