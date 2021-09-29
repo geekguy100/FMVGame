@@ -8,6 +8,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using UnityEngine.Audio;
 
 /// <summary>
 /// Handles managing the game's state.
@@ -27,6 +28,10 @@ public class GameManager : Singleton<GameManager>
     [Tooltip("The pause menu UI.")]
     [SerializeField] private GameObject pauseMenu;
 
+    [SerializeField] private UnityEngine.Video.VideoPlayer mainPlayer;
+    [SerializeField] private UnityEngine.UI.Slider volSlider;
+    [SerializeField] private AudioMixer mainMixer;
+
     /// <summary>
     /// Member variable initialization.
     /// </summary>
@@ -35,6 +40,23 @@ public class GameManager : Singleton<GameManager>
         base.Awake();
         paused = false;
         pauseMenu.SetActive(false);
+
+        volSlider.onValueChanged.AddListener(UpdateVideoVolume);
+    }
+
+    private void Start()
+    {
+        mainMixer.GetFloat("MainVolume", out float val);
+        UpdateVideoVolume(val);
+    }
+
+    private void UpdateVideoVolume(float val)
+    {
+        const float MAX_VAL = 100;
+
+        float acceptedVal = val + 80;
+
+        mainPlayer.SetDirectAudioVolume(0, acceptedVal / MAX_VAL);
     }
 
     private void Update()

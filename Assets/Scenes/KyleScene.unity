@@ -1316,6 +1316,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1530689274}
+  mainPlayer: {fileID: 1535313961}
+  volSlider: {fileID: 1157065066}
+  mainMixer: {fileID: 24100000, guid: 760d86063683a7f4d92b0fc77238cbb0, type: 2}
 --- !u!4 &1168957812
 Transform:
   m_ObjectHideFlags: 0
