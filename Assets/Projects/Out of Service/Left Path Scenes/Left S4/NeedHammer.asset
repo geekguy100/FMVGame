@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: NeedHammer
   m_EditorClassIdentifier: 
   popup: {fileID: 8356471834130213862, guid: d37f0466d0477ed4a87f0ef768923cea, type: 3}
-  condition: 0
+  condition: 1
   requiredItem: {fileID: 11400000, guid: 285cfa9aae03dad4ea813ec11f87f016, type: 2}

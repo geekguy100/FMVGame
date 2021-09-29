@@ -46,17 +46,30 @@ public class FMVManager : MonoBehaviour
     //}
     #endregion
 
+    [FoldoutGroup("Static Effect")]
+    [SerializeField] private bool displayEffect = true;
+    [SerializeField] private GameObject staticEffect;
+    [FoldoutGroup("Static Effect")]
+    [SerializeField] private float displayTime;
+
+
     #region -- // Event Subscribing / Unsubscribing // --
     private void OnEnable()
     {
         scenarioProgressorChannel.OnEventRaised += SwapScenario;
         seekRequestChannel.OnEventRaised += SeekTo;
+
+        if (GameManager.Instance != null)
+            GameManager.Instance.GamePausedEvent += TogglePause;
     }
 
     private void OnDisable()
     {
         scenarioProgressorChannel.OnEventRaised -= SwapScenario;
         seekRequestChannel.OnEventRaised -= SeekTo;
+
+        if (GameManager.Instance != null)
+            GameManager.Instance.GamePausedEvent -= TogglePause;
     }
 
     private void OnDestroy()
@@ -80,9 +93,21 @@ public class FMVManager : MonoBehaviour
     {
         if(!videoParent.isPlaying)
         {
+            if (displayEffect)
+            {
+                StartCoroutine(ActivateStatic());
+            }
+
             videoParent.Play();
             StartCoroutine(TrackTime());
         }
+    }
+
+    private IEnumerator ActivateStatic()
+    {
+        staticEffect.SetActive(true);
+        yield return new WaitForSeconds(displayTime);
+        staticEffect.SetActive(false);
     }
 
     /// <summary>
@@ -152,5 +177,21 @@ public class FMVManager : MonoBehaviour
         videoParent.Stop();
         videoParent.time = time;
         videoParent.Play();
+    }
+
+    /// <summary>
+    /// Toggles pausing the video playback.
+    /// </summary>
+    /// <param name="paused">True if playback should be paused.</param>
+    private void TogglePause(bool paused)
+    {
+        if (paused)
+        {
+            videoParent.Pause();
+        }
+        else
+        {
+            videoParent.Play();
+        }
     }
 }
