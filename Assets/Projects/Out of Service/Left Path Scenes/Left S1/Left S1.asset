@@ -15,12 +15,14 @@ MonoBehaviour:
   videoClip: {fileID: 32900000, guid: d226c7b556952114f851022ef3d02b5c, type: 3}
   timeElapsedChannel: {fileID: 11400000, guid: 339aa48be2143104588dad10ef90050b, type: 2}
   scenarioProgressorChannel: {fileID: 11400000, guid: 106f3903f8355f84fa346259715224ff, type: 2}
-  choicesToBeMade: 0
-  popups: []
+  choicesToBeMade: 1
+  popups:
+  - {fileID: 5489755931133411314, guid: 9ef81020529b07f4e97c44f46e6edcda, type: 3}
+  - {fileID: 4668087892736490929, guid: 56be6186861ace04c8825ac916a30c39, type: 3}
   nextScenario: {fileID: 0}
   enableLooping: 0
   seekRequestChannel: {fileID: 11400000, guid: a84385fc3cfe642429c3ad795e3dfb6e, type: 2}
-  loopBeginningTime: 0
-  loopEnterTime: 0
+  loopBeginningTime: 31.933333333333334
+  loopEnterTime: 32.9
   scenarioStartCallbackChannel: {fileID: 0}
   scenarioEndCallbackChannel: {fileID: 0}

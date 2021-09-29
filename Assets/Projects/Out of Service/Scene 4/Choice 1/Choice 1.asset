@@ -22,5 +22,5 @@ MonoBehaviour:
   seekRequestChannel: {fileID: 11400000, guid: a84385fc3cfe642429c3ad795e3dfb6e, type: 2}
   loopBeginningTime: 0
   loopEnterTime: 0
-  scenarioStartCallbackChannel: {fileID: 0}
+  scenarioStartCallbackChannel: {fileID: 11400000, guid: c23b76cebb98cfc4fb3df37857cbd5a1, type: 2}
   scenarioEndCallbackChannel: {fileID: 0}
