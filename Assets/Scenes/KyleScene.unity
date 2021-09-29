@@ -1801,7 +1801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd3566b457e08e748b5903d2fc1e9783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentScenario: {fileID: 11400000, guid: 20c4c8e4fd9926d48a5e168b8a5cc904, type: 2}
+  currentScenario: {fileID: 11400000, guid: 86d998b2d8340c24cad419358d18fa05, type: 2}
   videoParent: {fileID: 1535313961}
   timeElapsedChannel: {fileID: 11400000, guid: 339aa48be2143104588dad10ef90050b, type: 2}
   scenarioProgressorChannel: {fileID: 11400000, guid: 106f3903f8355f84fa346259715224ff, type: 2}
@@ -1835,7 +1835,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b19da348958a9224eb35adf9ab886178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
+  items:
+  - {fileID: 11400000, guid: 285cfa9aae03dad4ea813ec11f87f016, type: 2}
+  - {fileID: 11400000, guid: 711003bccd1de374a82487578f9c0831, type: 2}
 --- !u!1 &1861438361
 GameObject:
   m_ObjectHideFlags: 0
