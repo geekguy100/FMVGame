@@ -17,7 +17,7 @@ MonoBehaviour:
   scenarioProgressorChannel: {fileID: 11400000, guid: 106f3903f8355f84fa346259715224ff, type: 2}
   choicesToBeMade: 0
   popups: []
-  nextScenario: {fileID: 0}
+  nextScenario: {fileID: 11400000, guid: 7d4996e8ade640d428094a9d872f6522, type: 2}
   enableLooping: 0
   seekRequestChannel: {fileID: 11400000, guid: a84385fc3cfe642429c3ad795e3dfb6e, type: 2}
   loopBeginningTime: 0
