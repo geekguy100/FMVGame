@@ -22,7 +22,7 @@ MonoBehaviour:
   nextScenario: {fileID: 0}
   enableLooping: 0
   seekRequestChannel: {fileID: 11400000, guid: a84385fc3cfe642429c3ad795e3dfb6e, type: 2}
-  loopBeginningTime: 31.933333333333334
+  loopBeginningTime: 32.79999923706055
   loopEnterTime: 32.9
   scenarioStartCallbackChannel: {fileID: 0}
   scenarioEndCallbackChannel: {fileID: 0}
