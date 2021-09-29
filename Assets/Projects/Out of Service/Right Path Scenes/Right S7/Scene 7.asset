@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d358a003be2f3ea4f85932774ba11c00, type: 3}
   m_Name: Scene 7
   m_EditorClassIdentifier: 
-  videoClip: {fileID: 32900000, guid: e2b8200ba928c46499956557ddb8e89a, type: 3}
+  videoClip: {fileID: 32900000, guid: 72329f6968665574e8c916623e6b34f0, type: 3}
   timeElapsedChannel: {fileID: 11400000, guid: 339aa48be2143104588dad10ef90050b, type: 2}
   scenarioProgressorChannel: {fileID: 11400000, guid: 106f3903f8355f84fa346259715224ff, type: 2}
   choicesToBeMade: 1
   popups:
-  - {fileID: 7792009496802540831, guid: 4bc5c50d8ea1148fa9af28919835c7a0, type: 3}
-  - {fileID: 7593261209708912134, guid: f76abdf81944140a490c11e28670b235, type: 3}
+  - {fileID: 7010671681374437778, guid: e0c81fbf408224b6c9623f01d7ac6cd3, type: 3}
+  - {fileID: 7299305452306314309, guid: 137b97ef35f9e4108bafa028f6354288, type: 3}
   nextScenario: {fileID: 0}
   enableLooping: 0
   seekRequestChannel: {fileID: 11400000, guid: a84385fc3cfe642429c3ad795e3dfb6e, type: 2}

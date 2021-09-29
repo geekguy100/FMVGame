@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scenarioProgressorChannel: {fileID: 11400000, guid: 106f3903f8355f84fa346259715224ff, type: 2}
-  nextScenario: {fileID: 0}
+  nextScenario: {fileID: 11400000, guid: 1e0a0f6582f5c402f9f1edcaa527d8b9, type: 2}
 --- !u!95 &4678437138126987917
 Animator:
   serializedVersion: 3
