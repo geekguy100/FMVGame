@@ -23,4 +23,4 @@ MonoBehaviour:
   loopBeginningTime: 0
   loopEnterTime: 0
   scenarioStartCallbackChannel: {fileID: 0}
-  scenarioEndCallbackChannel: {fileID: 11400000, guid: f2129e2aafc994548be292576a1bd894, type: 2}
+  scenarioEndCallbackChannel: {fileID: 0}
