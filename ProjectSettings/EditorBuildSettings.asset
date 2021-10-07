@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 0f5e63919be7b4eef8a0e123713aa301
   - enabled: 1
-    path: Assets/Scenes/KyleScene.unity
+    path: Assets/Scenes/Gameplay.unity
     guid: 3cbf2caeb404e19479626f711dccdd0a
   m_configObjects: {}
